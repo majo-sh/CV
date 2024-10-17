@@ -35,7 +35,8 @@ function downloadPDF() {
   // Generar y descargar el PDF, luego mostrar el botón nuevamente
   html2pdf().from(cvContainer).set(options).save().then(() => {
     downloadBtn.style.display = 'block';
-    if (iframe) iframe.style.display = 'block';
+     if (iframe) iframe.style.display = 'block';
+     if (pdfLink) pdfLink.style.display = 'none';
   });
 }
 
