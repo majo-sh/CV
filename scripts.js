@@ -27,7 +27,8 @@ function downloadPDF() {
     filename: 'HojaDeVida_BrahiamMateoGuerrero.pdf',
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all'] }
   };
 
   // Generar y descargar el PDF, luego mostrar el botón nuevamente
