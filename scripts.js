@@ -19,8 +19,9 @@ function downloadPDF() {
   const cvContainer = document.querySelector('.cv-container');
   const downloadBtn = document.getElementById('download-btn');
   
-  // Ocultar el botón mientras se genera el PDF
+  // Ocultar el botón y iframe mientras se genera el PDF
   downloadBtn.style.display = 'none';
+   if (iframe) iframe.style.display = 'none';
   
   const options = {
     margin: 1,
@@ -34,6 +35,7 @@ function downloadPDF() {
   // Generar y descargar el PDF, luego mostrar el botón nuevamente
   html2pdf().from(cvContainer).set(options).save().then(() => {
     downloadBtn.style.display = 'block';
+    if (iframe) iframe.style.display = 'block';
   });
 }
 
