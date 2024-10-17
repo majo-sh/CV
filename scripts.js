@@ -19,12 +19,10 @@ function downloadPDF() {
   const cvContainer = document.querySelector('.cv-container');
   const downloadBtn = document.getElementById('download-btn');
   const iframe = document.querySelector('iframe'); // Asegúrate de seleccionar el iframe
-  const pdfLink = document.getElementById('pdf-link'); // Asegúrate de seleccionar el enlace al PDF
 
-  // Ocultar el botón y iframe (si existen) mientras se genera el PDF
+  // Ocultar el botón y el iframe (si existen) mientras se genera el PDF
   downloadBtn.style.display = 'none';
   if (iframe) iframe.style.display = 'none';
-  if (pdfLink) pdfLink.style.display = 'block';
 
   const options = {
     margin: 1,
@@ -36,11 +34,14 @@ function downloadPDF() {
   };
 
   // Generar y descargar el PDF, luego mostrar nuevamente los elementos ocultos
-  html2pdf().from(cvContainer).set(options).save().then(() => {
-    downloadBtn.style.display = 'block';
-    if (iframe) iframe.style.display = 'block';
-    if (pdfLink) pdfLink.style.display = 'none';
-  });
+  html2pdf()
+    .from(cvContainer)
+    .set(options)
+    .save()
+    .then(() => {
+      downloadBtn.style.display = 'block';
+      if (iframe) iframe.style.display = 'block';
+    });
 }
 
 // Función para inicializar los eventos de la página
@@ -48,7 +49,7 @@ function initializeEvents() {
   document.getElementById('es-btn').addEventListener('click', () => setLanguage('es'));
   document.getElementById('en-btn').addEventListener('click', () => setLanguage('en'));
   document.getElementById('download-btn').addEventListener('click', downloadPDF);
-  
+
   // Establecer idioma predeterminado al cargar la página
   window.addEventListener('DOMContentLoaded', () => setLanguage('es'));
 }
