@@ -30,3 +30,20 @@ function setLanguage(lang) {
     setLanguage('es'); 
   });
   
+  document.getElementById('download-btn').addEventListener('click', function() {
+    // Selecciona el contenido que quieres convertir a PDF
+    const cvContainer = document.querySelector('.cv-container');
+    
+    // Configuraciones de html2pdf
+    const options = {
+      margin: 1,
+      filename: 'HojaDeVida_BrahiamMateoGuerrero.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+  
+    // Generar el PDF
+    html2pdf().from(cvContainer).set(options).save();
+  });
+  
