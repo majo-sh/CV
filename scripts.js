@@ -1,49 +1,50 @@
+// Función para actualizar la interfaz en función del idioma seleccionado
+function updateActiveLanguageButton(lang) {
+  document.querySelectorAll('.language-switcher button').forEach(button => {
+    button.classList.remove('active');
+  });
+
+  document.getElementById(`${lang}-btn`).classList.add('active');
+}
+
 // Función para establecer el idioma
 function setLanguage(lang) {
-    document.body.classList.remove('es', 'en');
-    document.body.classList.add(lang);
-  
+  document.body.classList.remove('es', 'en');
+  document.body.classList.add(lang);
+  updateActiveLanguageButton(lang);
+}
 
-    document.querySelectorAll('.language-switcher button').forEach(button => {
-      button.classList.remove('active');
-    });
+// Función para manejar la descarga del PDF
+function downloadPDF() {
+  const cvContainer = document.querySelector('.cv-container');
+  const downloadBtn = document.getElementById('download-btn');
   
-   
-    if (lang === 'es') {
-      document.getElementById('es-btn').classList.add('active');
-    } else {
-      document.getElementById('en-btn').classList.add('active');
-    }
-  }
+  // Ocultar el botón mientras se genera el PDF
+  downloadBtn.style.display = 'none';
   
- 
-  document.getElementById('es-btn').addEventListener('click', function() {
-    setLanguage('es');
+  const options = {
+    margin: 1,
+    filename: 'HojaDeVida_BrahiamMateoGuerrero.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+
+  // Generar y descargar el PDF, luego mostrar el botón nuevamente
+  html2pdf().from(cvContainer).set(options).save().then(() => {
+    downloadBtn.style.display = 'block';
   });
+}
+
+// Función para inicializar los eventos de la página
+function initializeEvents() {
+  document.getElementById('es-btn').addEventListener('click', () => setLanguage('es'));
+  document.getElementById('en-btn').addEventListener('click', () => setLanguage('en'));
+  document.getElementById('download-btn').addEventListener('click', downloadPDF);
   
-  document.getElementById('en-btn').addEventListener('click', function() {
-    setLanguage('en');
-  });
-  
- 
-  window.addEventListener('DOMContentLoaded', (event) => {
-    setLanguage('es'); 
-  });
-  
-  document.getElementById('download-btn').addEventListener('click', function() {
-    // Selecciona el contenido que quieres convertir a PDF
-    const cvContainer = document.querySelector('.cv-container');
-    
-    // Configuraciones de html2pdf
-    const options = {
-      margin: 1,
-      filename: 'HojaDeVida_BrahiamMateoGuerrero.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-  
-    // Generar el PDF
-    html2pdf().from(cvContainer).set(options).save();
-  });
-  
+  // Establecer idioma predeterminado al cargar la página
+  window.addEventListener('DOMContentLoaded', () => setLanguage('es'));
+}
+
+// Inicializar la página
+initializeEvents();
