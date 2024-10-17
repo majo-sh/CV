@@ -18,11 +18,14 @@ function setLanguage(lang) {
 function downloadPDF() {
   const cvContainer = document.querySelector('.cv-container');
   const downloadBtn = document.getElementById('download-btn');
-  
-  // Ocultar el botón y iframe mientras se genera el PDF
+  const iframe = document.querySelector('iframe'); // Asegúrate de seleccionar el iframe
+  const pdfLink = document.getElementById('pdf-link'); // Asegúrate de seleccionar el enlace al PDF
+
+  // Ocultar el botón y iframe (si existen) mientras se genera el PDF
   downloadBtn.style.display = 'none';
-   if (iframe) iframe.style.display = 'none';
-  
+  if (iframe) iframe.style.display = 'none';
+  if (pdfLink) pdfLink.style.display = 'block';
+
   const options = {
     margin: 1,
     filename: 'HojaDeVida_BrahiamMateoGuerrero.pdf',
@@ -32,11 +35,11 @@ function downloadPDF() {
     pagebreak: { mode: ['avoid-all'] }
   };
 
-  // Generar y descargar el PDF, luego mostrar el botón nuevamente
+  // Generar y descargar el PDF, luego mostrar nuevamente los elementos ocultos
   html2pdf().from(cvContainer).set(options).save().then(() => {
     downloadBtn.style.display = 'block';
-     if (iframe) iframe.style.display = 'block';
-     if (pdfLink) pdfLink.style.display = 'none';
+    if (iframe) iframe.style.display = 'block';
+    if (pdfLink) pdfLink.style.display = 'none';
   });
 }
 
